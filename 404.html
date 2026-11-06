@@ -1,0 +1,21 @@
+---
+layout: default
+title: 404 — not found
+permalink: /404.html
+---
+<section class="hero">
+  <div class="hero-term">
+    <div class="hero-line">
+      <span class="prompt">visitor@{{ site.prompt_host }}:~$</span>
+      <span class="hero-cmd">cat {{ page.url | default: '/missing' }}</span>
+    </div>
+    <div class="hero-line hero-out" style="color:var(--red);text-shadow:none;">
+      Error 404 — No such file or directory
+    </div>
+    <p class="hero-desc">The page you're looking for got <code>rm -rf</code>'d, moved, or never existed.</p>
+    <div class="hero-actions">
+      <a class="btn" href="{{ '/' | relative_url }}">cd ~</a>
+      <a class="btn btn--ghost" href="{{ '/archives/' | relative_url }}">ls ./archive</a>
+    </div>
+  </div>
+</section>

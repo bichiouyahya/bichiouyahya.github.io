@@ -1,0 +1,125 @@
+<script>
+(function () {
+  "use strict";
+
+  /* ── Mobile nav toggle ───────────────────────────────── */
+  var toggle = document.getElementById("nav-toggle");
+  var nav = document.getElementById("site-nav");
+  if (toggle && nav) {
+    toggle.addEventListener("click", function () {
+      var open = nav.classList.toggle("is-open");
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  }
+
+  /* ── Reading progress bar ────────────────────────────── */
+  var bar = document.getElementById("progress-bar");
+  if (bar) {
+    var onScroll = function () {
+      var h = document.documentElement;
+      var scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
+      bar.style.transform = "scaleX(" + Math.min(scrolled, 1) + ")";
+    };
+    document.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
+  /* ── Enhance code blocks: header + copy button ───────── */
+  var blocks = document.querySelectorAll(".post-content .highlighter-rouge, .post-content div.highlight");
+  blocks.forEach(function (block) {
+    if (block.closest(".code-wrap")) return;
+    var pre = block.querySelector("pre");
+    if (!pre) return;
+
+    // language label from the language-xxx class
+    var lang = "code";
+    var m = (block.className || "").match(/language-([\w+-]+)/);
+    if (m) { lang = m[1]; }
+
+    var wrap = document.createElement("div");
+    wrap.className = "code-wrap";
+    block.parentNode.insertBefore(wrap, block);
+
+    var header = document.createElement("div");
+    header.className = "code-header";
+    header.innerHTML =
+      '<span class="code-dots"><i></i><i></i><i></i></span>' +
+      '<span class="code-lang">' + lang + '</span>' +
+      '<button class="code-copy" type="button" aria-label="Copy code">' +
+      '<i class="fa-regular fa-copy"></i><span>copy</span></button>';
+    wrap.appendChild(header);
+    wrap.appendChild(block);
+
+    var btn = header.querySelector(".code-copy");
+    btn.addEventListener("click", function () {
+      var code = block.querySelector("code") || pre;
+      var text = code.innerText.replace(/\n$/, "");
+      navigator.clipboard.writeText(text).then(function () {
+        btn.classList.add("copied");
+        btn.querySelector("span").textContent = "copied";
+        setTimeout(function () {
+          btn.classList.remove("copied");
+          btn.querySelector("span").textContent = "copy";
+        }, 1600);
+      });
+    });
+  });
+
+  /* ── Table of contents + scroll-spy ──────────────────── */
+  var tocList = document.getElementById("toc-list");
+  var content = document.querySelector(".post-content");
+  if (tocList && content) {
+    var headings = content.querySelectorAll("h2, h3");
+    if (headings.length < 2) {
+      var tocBox = document.getElementById("toc");
+      if (tocBox) { tocBox.style.display = "none"; }
+    } else {
+      headings.forEach(function (h) {
+        if (!h.id) {
+          h.id = h.textContent.trim().toLowerCase()
+            .replace(/[^\w\s-]/g, "").replace(/\s+/g, "-");
+        }
+        var li = document.createElement("li");
+        li.className = "toc-item toc-" + h.tagName.toLowerCase();
+        var a = document.createElement("a");
+        a.href = "#" + h.id;
+        a.textContent = h.textContent;
+        a.dataset.target = h.id;
+        li.appendChild(a);
+        tocList.appendChild(li);
+      });
+
+      var links = tocList.querySelectorAll("a");
+      var byId = {};
+      links.forEach(function (a) { byId[a.dataset.target] = a; });
+
+      var spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            links.forEach(function (a) { a.classList.remove("is-active"); });
+            var active = byId[e.target.id];
+            if (active) { active.classList.add("is-active"); }
+          }
+        });
+      }, { rootMargin: "0px 0px -75% 0px", threshold: 0 });
+      headings.forEach(function (h) { spy.observe(h); });
+    }
+  }
+
+  /* ── Hero typing effect (progressive enhancement) ────── */
+  var typed = document.getElementById("typed-output");
+  if (typed) {
+    var full = typed.getAttribute("data-text") || "";
+    typed.textContent = "";
+    var i = 0;
+    var tick = function () {
+      if (i <= full.length) {
+        typed.textContent = full.slice(0, i);
+        i++;
+        setTimeout(tick, 45);
+      }
+    };
+    setTimeout(tick, 350);
+  }
+})();
+</script>

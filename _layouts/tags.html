@@ -1,0 +1,19 @@
+---
+layout: default
+---
+<section class="tax-page">
+  <h1 class="section-title"><span class="prompt-sm">$</span> ls ./tags</h1>
+  {{ content }}
+  <div class="tag-cloud">
+    {% assign tags = site.tags | sort %}
+    {% for tag in tags %}
+      {% assign name = tag[0] %}
+      {% assign items = tag[1] %}
+      {% assign nslug = name | slugify %}
+      <a class="tag tag--cloud" href="{{ '/tags/' | append: nslug | append: '/' | relative_url }}">
+        #{{ name }} <span class="tag-count">{{ items | size }}</span>
+      </a>
+    {% endfor %}
+  </div>
+  {% if site.tags.size == 0 %}<p class="empty">// no tags yet.</p>{% endif %}
+</section>

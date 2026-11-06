@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en' }}" data-theme="dark">
+{% include head.html %}
+<body>
+  <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+  {% include header.html %}
+  <main class="site-main">
+    {{ content }}
+  </main>
+  {% include footer.html %}
+  {% include scripts.html %}
+</body>
+</html>

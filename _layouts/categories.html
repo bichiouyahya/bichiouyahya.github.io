@@ -1,0 +1,23 @@
+---
+layout: default
+---
+<section class="tax-page">
+  <h1 class="section-title"><span class="prompt-sm">$</span> ls ./categories</h1>
+  {{ content }}
+  <ul class="cat-grid">
+    {% assign cats = site.categories | sort %}
+    {% for cat in cats %}
+      {% assign name = cat[0] %}
+      {% assign items = cat[1] %}
+      {% assign nslug = name | slugify %}
+      <li class="cat-card">
+        <a href="{{ '/categories/' | append: nslug | append: '/' | relative_url }}">
+          <span class="cat-chevron" aria-hidden="true">&gt;</span>
+          <span class="cat-name">{{ name }}</span>
+          <span class="cat-count">{{ items | size }}</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+  {% if site.categories.size == 0 %}<p class="empty">// no categories yet.</p>{% endif %}
+</section>

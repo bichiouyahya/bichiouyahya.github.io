@@ -1,0 +1,43 @@
+---
+layout: default
+---
+<section class="hero">
+  <div class="hero-term">
+    <div class="hero-line">
+      <span class="prompt">visitor@{{ site.prompt_host }}:~$</span>
+      <span class="hero-cmd">whoami</span>
+    </div>
+    <div class="hero-line hero-out">
+      <span id="typed-output" data-text="{{ site.title }} — {{ site.tagline }}">{{ site.title }} — {{ site.tagline }}</span><span class="cursor" aria-hidden="true">█</span>
+    </div>
+    <p class="hero-desc">{{ site.description }}</p>
+    <div class="hero-actions">
+      <a class="btn" href="#writeups">./writeups</a>
+      <a class="btn btn--ghost" href="{{ '/about/' | relative_url }}">./about</a>
+    </div>
+  </div>
+</section>
+
+<section class="post-list" id="writeups">
+  <h2 class="section-title"><span class="prompt-sm">$</span> ls ./writeups</h2>
+
+  {% if paginator.posts.size > 0 %}
+    {% for post in paginator.posts %}
+      {% include post-card.html post=post %}
+    {% endfor %}
+
+    {% if paginator.total_pages > 1 %}
+      <nav class="pagination">
+        {% if paginator.previous_page %}
+          <a class="page-link" href="{{ paginator.previous_page_path | relative_url }}">&larr; newer</a>
+        {% endif %}
+        <span class="page-count">page {{ paginator.page }} / {{ paginator.total_pages }}</span>
+        {% if paginator.next_page %}
+          <a class="page-link" href="{{ paginator.next_page_path | relative_url }}">older &rarr;</a>
+        {% endif %}
+      </nav>
+    {% endif %}
+  {% else %}
+    <p class="empty">// no writeups published yet — stay tuned.</p>
+  {% endif %}
+</section>

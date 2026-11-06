@@ -1,0 +1,13 @@
+---
+layout: default
+---
+<section class="archive-page">
+  <h1 class="section-title"><span class="prompt-sm">$</span> grep -r category:"{{ page.title }}"</h1>
+  <p class="archive-count">{{ page.posts | size }} writeup{% if page.posts.size != 1 %}s{% endif %} in <span class="hl">{{ page.title }}</span></p>
+  <div class="post-list">
+    {% for post in page.posts %}
+      {% include post-card.html post=post %}
+    {% endfor %}
+  </div>
+  <p class="back-link"><a href="{{ '/categories/' | relative_url }}">&larr; all categories</a></p>
+</section>

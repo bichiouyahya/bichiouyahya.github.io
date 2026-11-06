@@ -1,0 +1,11 @@
+---
+layout: default
+---
+<article class="page">
+  <header class="page-head">
+    <h1 class="page-title"><span class="prompt-sm">$</span> cat {{ page.title | default: page.name | downcase }}.md</h1>
+  </header>
+  <div class="post-content page-content">
+    {{ content }}
+  </div>
+</article>

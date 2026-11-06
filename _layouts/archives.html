@@ -1,0 +1,27 @@
+---
+layout: default
+---
+<section class="tax-page">
+  <h1 class="section-title"><span class="prompt-sm">$</span> ls -la ./archive</h1>
+  {{ content }}
+  {% if site.posts.size > 0 %}
+    <div class="archive-timeline">
+      {% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+      {% for year in posts_by_year %}
+        <div class="archive-year">
+          <h2 class="archive-year__label">{{ year.name }}</h2>
+          <ul class="archive-items">
+            {% for post in year.items %}
+              <li class="archive-item">
+                <span class="archive-date">{{ post.date | date: '%m-%d' }}</span>
+                <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="empty">// archive is empty.</p>
+  {% endif %}
+</section>
