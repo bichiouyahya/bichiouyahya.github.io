@@ -5,7 +5,7 @@ categories: [Writeups, OWASP Juice Shop]
 tags: [broken-authentication, web-security, csrf, owasp-top-10, burp-suite]
 description: Abusing an unverified password change endpoint to take over Bender's account without SQL injection or the Forgot Password flow.
 image:
-  path: /assets/img/posts/bender/cover.png
+  path: /assets/post-01/00-challenge.png
   alt: OWASP Juice Shop Change Bender's Password challenge
 ---
 
