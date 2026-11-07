@@ -9,7 +9,7 @@ image:
   alt: OWASP Juice Shop Change Bender's Password challenge
 ---
 
-## TL;DR
+## The Short Version
 
 <!-- 2 or 3 sentences. What the bug is, how you exploited it, and what the impact is. Recruiters often read only this part. -->
 
@@ -52,10 +52,7 @@ I also noticed that the user was identified with the token so I started looking 
 
 The challenge said not to use SQLi to change the password but didn't mention anything about logging in so ...
 
-On the login page I started messing with the form with a bunch of SQLi scripts and found a way to bypass the password check directly and login to bender's account.
-```http
-bender@juice-sh.op'-- -
-```
+On the login page I started messing with the form with a bunch of SQLi scripts and found a way to bypass the password check directly and login to bender's account by dropping `bender@juice-sh.op'-- -` into the email field.
 
 ![Login SQLi](/assets/post-01/01-login-sqli.png)
 
@@ -71,6 +68,25 @@ Authorization: Bearer <BENDER_TOKEN>
 ```
 
 ![Successful response](/assets/post-01/04-result.png)
+
+## Root Cause
+
+So the whole thing breaks because the change password endpoint trusts the session token to figure out who you are but never actually makes sure you know the current password. The `current` parameter only gets validated if it's there in the request, so the moment you drop it the backend just skips the check and updates the password anyway. On top of that it's a GET request with everything sitting in the url query string, which is not really where you want a password change to live.
+
+## Impact
+
+This is a full account takeover. Any authenticated attacker who can get a hold of a victim's token can reset their password to whatever they want without ever knowing the old one. In my case I grabbed Bender's session from the login and changed his password to `slurmCl4ssic`, but the exact same trick works on any account. Change the password and you own the account, you lock the real user out and get access to whatever that account can reach.
+
+## Remediation
+
+The fix is pretty straightforward. The current password should always be required and verified server side, not only when the client decides to send it, so dropping the parameter shouldn't be an option in the first place. State changing actions like this one should also be POST (or PUT) with a proper anti CSRF token instead of a GET, and the password should never travel in the query string where it ends up in logs and browser history.
+
+## Takeaways
+
+- Never trust the client to send a security check for you, if a parameter can be dropped it will be dropped.
+- Anything that changes state shouldn't be a GET request.
+- Passwords (or any secret really) in the url is a bad idea, they leak into logs, history and referrers.
+- When a request that looks incomplete still comes back `200 OK`, that's usually worth a second look.
 
 ## References
 
