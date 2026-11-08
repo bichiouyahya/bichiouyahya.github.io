@@ -1,6 +1,6 @@
 ---
 title: "OWASP Juice Shop: Unsigned JWT (5 Stars)"
-date: 2026-11-08 20:00:00 +0100
+date: 2026-11-08 12:00:00 +0100
 categories: [Writeups, OWASP Juice Shop]
 tags: [jwt, broken-authentication, web-security, cryptographic-failures, owasp-top-10, burp-suite]
 description: Forging an essentially unsigned JWT that impersonates the non-existing user jwtn3d@juice-sh.op by abusing the "none" algorithm.
