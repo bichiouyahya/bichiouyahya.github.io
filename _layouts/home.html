@@ -3,23 +3,18 @@ layout: default
 ---
 <section class="hero">
   <div class="hero-term">
-    <div class="hero-line">
-      <span class="prompt">visitor@{{ site.prompt_host }}:~$</span>
-      <span class="hero-cmd">whoami</span>
-    </div>
-    <div class="hero-line hero-out">
-      <span id="typed-output" data-text="{{ site.title }} — {{ site.tagline }}">{{ site.title }} — {{ site.tagline }}</span><span class="cursor" aria-hidden="true">█</span>
-    </div>
+    <span class="hero-eyebrow">{{ site.tagline }}</span>
+    <h1 class="hero-out">{{ site.title }}</h1>
     <p class="hero-desc">{{ site.description }}</p>
     <div class="hero-actions">
-      <a class="btn" href="#writeups">./writeups</a>
-      <a class="btn btn--ghost" href="{{ '/about/' | relative_url }}">./about</a>
+      <a class="btn" href="#writeups">Read writeups</a>
+      <a class="btn btn--ghost" href="{{ '/about/' | relative_url }}">About me</a>
     </div>
   </div>
 </section>
 
 <section class="post-list" id="writeups">
-  <h2 class="section-title"><span class="prompt-sm">$</span> ls ./writeups</h2>
+  <h2 class="section-title">Latest writeups</h2>
 
   {% if paginator.posts.size > 0 %}
     {% for post in paginator.posts %}
@@ -38,6 +33,6 @@ layout: default
       </nav>
     {% endif %}
   {% else %}
-    <p class="empty">// no writeups published yet — stay tuned.</p>
+    <p class="empty">No writeups published yet — stay tuned.</p>
   {% endif %}
 </section>

@@ -1,27 +1,21 @@
 <header class="site-header">
   <div class="term-bar">
-    <div class="term-dots" aria-hidden="true">
-      <span class="dot dot--red"></span>
-      <span class="dot dot--amber"></span>
-      <span class="dot dot--green"></span>
-    </div>
     <div class="term-title">
-      <a href="{{ '/' | relative_url }}">{{ site.prompt_user }}@{{ site.prompt_host }}</a>: ~
+      <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
     </div>
     <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
-      <i class="fa-solid fa-terminal"></i>
+      <i class="fa-solid fa-bars"></i>
     </button>
   </div>
 
   <nav class="site-nav" id="site-nav">
-    <span class="nav-prompt" aria-hidden="true">$</span>
     <a href="{{ '/' | relative_url }}"
-       class="nav-link {% if page.url == '/' %}is-active{% endif %}">cd&nbsp;~</a>
+       class="nav-link {% if page.url == '/' %}is-active{% endif %}">Home</a>
     {% assign tabs = site.tabs | sort: 'order' %}
     {% for tab in tabs %}
       {% assign label = tab.title | default: tab.name | remove: '.md' %}
       <a href="{{ tab.url | relative_url }}"
-         class="nav-link {% if page.url == tab.url %}is-active{% endif %}">{{ label | downcase }}</a>
+         class="nav-link {% if page.url == tab.url %}is-active{% endif %}">{{ label | capitalize }}</a>
     {% endfor %}
   </nav>
 </header>

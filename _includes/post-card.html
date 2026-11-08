@@ -2,12 +2,10 @@
 {% assign rt = words | divided_by: 200 | plus: 1 %}
 <article class="post-card">
   <a class="post-card__link" href="{{ post.url | relative_url }}">
-    <span class="post-card__chevron" aria-hidden="true">&gt;</span>
     <h2 class="post-card__title">{{ post.title }}</h2>
   </a>
   <div class="post-card__meta">
-    <span class="meta-dim"># </span>
-    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y-%m-%d' }}</time>
+    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%b %-d, %Y' }}</time>
     {% if post.categories.size > 0 %}
       <span class="meta-sep">·</span>
       {% for cat in post.categories %}{% assign cslug = cat | slugify %}<a class="meta-cat" href="{{ '/categories/' | append: cslug | append: '/' | relative_url }}">{{ cat }}</a>{% unless forloop.last %}/{% endunless %}{% endfor %}

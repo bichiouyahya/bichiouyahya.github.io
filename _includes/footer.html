@@ -4,7 +4,7 @@
       <a href="{{ site.social.github }}" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
     {% endif %}
     {% if site.social.linkedin %}
-      <a href="{{ site.social.linkedin }}" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+      <a href="{{ site.social.linkedin }}" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
     {% endif %}
     {% if site.social.email %}
       <a href="mailto:{{ site.social.email }}" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
@@ -13,10 +13,9 @@
   </div>
 
   <div class="footer-meta">
-    <span class="footer-prompt">{{ site.prompt_user }}@{{ site.prompt_host }}:~$</span>
-    echo "&copy; {{ 'now' | date: '%Y' }} {{ site.social.name }}"
+    &copy; {{ 'now' | date: '%Y' }} {{ site.social.name }}
   </div>
   <div class="footer-sub">
-    built with <a href="https://jekyllrb.com" target="_blank" rel="noopener">jekyll</a> &middot; no trackers &middot; hosted on github pages
+    Built with <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> &middot; no trackers &middot; hosted on GitHub Pages
   </div>
 </footer>

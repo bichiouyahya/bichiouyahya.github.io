@@ -5,12 +5,8 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-```console
-visitor@bichiou:~$ whoami
-Yahya Bichiou — Offensive Security · Web Exploitation
-```
-
-Hey, I'm **Yahya Bichiou**. I break web applications and write up how I did it.
+Hey, I'm **Yahya Bichiou** — an offensive security enthusiast focused on web
+exploitation. I break web applications and write up how I did it.
 
 This site is my lab notebook: CTF solves, OWASP Juice Shop challenges, and notes
 on web exploitation — broken authentication, injection, access control, and
