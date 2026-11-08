@@ -21,10 +21,10 @@
   --ink-faint:  #938d82;
 
   /* pastel accents */
-  --accent:     #6b6fd6;   /* periwinkle */
-  --accent-ink: #4a4fc0;   /* readable link text */
-  --accent-weak:#ecedfb;
-  --accent-line:#d7d8f5;
+  --accent:     #c9775f;   /* dusty terracotta */
+  --accent-ink: #a84d32;   /* readable link text */
+  --accent-weak:#f7ebe4;
+  --accent-line:#eccdbf;
 
   --mint:       #3f9d7a;
   --mint-weak:  #e7f4ee;
@@ -214,7 +214,7 @@ img { max-width: 100%; height: auto; }
   border: 1px solid var(--accent-line);
   border-radius: 999px; padding: 0.12rem 0.65rem;
 }
-.tag:hover { background: #e3e4fa; text-decoration: none; }
+.tag:hover { background: #f2dccf; text-decoration: none; }
 
 /* ── Pagination ────────────────────────────────────────── */
 .pagination {
