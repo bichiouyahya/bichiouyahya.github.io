@@ -27,7 +27,7 @@ The password change endpoint in OWASP Juice Shop only checks the current passwor
 
 > Change Bender's password into `slurmCl4ssic` without using SQL Injection or Forgot Password.
 
-Okey so the challenge said not to use any SQLi or the forgot password function to change the password so I started looking for another alternative, I tried to understand how the change password function actually works
+Okay so the challenge said not to use any SQLi or the forgot password function to change the password so I started looking for another way, I tried to understand how the change password function actually works
 
 ## Reconnaissance
 
@@ -43,7 +43,7 @@ Authorization: Bearer eyJ0eXAiOiJKV1Qi...
 
 A few things stood out right away:
 
-The state changing action uses GET with the passwords travel in the URL query string. I tried messing with the url and noticed that the request passed 200 OK even without the current password parameter.
+The state changing action uses GET and the passwords travel in the URL query string. I tried messing with the URL and noticed that the request came back 200 OK even without the current password parameter.
 I also noticed that the user was identified with the token so I started looking for a way to get Bender's session token
 
 ![Change password request in repeater](/assets/post-01/03-burp-repeater.png)
@@ -52,7 +52,7 @@ I also noticed that the user was identified with the token so I started looking 
 
 The challenge said not to use SQLi to change the password but didn't mention anything about logging in so ...
 
-On the login page I started messing with the form with a bunch of SQLi scripts and found a way to bypass the password check directly and login to bender's account by dropping `bender@juice-sh.op'-- -` into the email field.
+On the login page I started messing with the form with a bunch of SQLi payloads and found a way to bypass the password check directly and log in to Bender's account by dropping `bender@juice-sh.op'-- -` into the email field.
 
 ![Login SQLi](/assets/post-01/01-login-sqli.png)
 
@@ -71,7 +71,7 @@ Authorization: Bearer <BENDER_TOKEN>
 
 ## Root Cause
 
-So the whole thing breaks because the change password endpoint trusts the session token to figure out who you are but never actually makes sure you know the current password. The `current` parameter only gets validated if it's there in the request, so the moment you drop it the backend just skips the check and updates the password anyway. On top of that it's a GET request with everything sitting in the url query string, which is not really where you want a password change to live.
+So the whole thing breaks because the change password endpoint trusts the session token to figure out who you are but never actually makes sure you know the current password. The `current` parameter only gets validated if it's there in the request, so the moment you drop it the backend just skips the check and updates the password anyway. On top of that it's a GET request with everything sitting in the URL query string, which is not really where you want a password change to live.
 
 ## Impact
 
@@ -85,7 +85,7 @@ The fix is pretty straightforward. The current password should always be require
 
 - Never trust the client to send a security check for you, if a parameter can be dropped it will be dropped.
 - Anything that changes state shouldn't be a GET request.
-- Passwords (or any secret really) in the url is a bad idea, they leak into logs, history and referrers.
+- Passwords (or any secret really) in the URL are a bad idea, they leak into logs, history and referrers.
 - When a request that looks incomplete still comes back `200 OK`, that's usually worth a second look.
 
 ## References
